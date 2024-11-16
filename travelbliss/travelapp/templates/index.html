@@ -1,0 +1,420 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Website</title>
+
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <!-- Bootstrap Link -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- Bootstrap Link -->
+
+
+  <!-- Font Awesome Cdn -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+  <!-- Font Awesome Cdn -->
+
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+</head>
+
+<body>
+
+
+
+  <!-- Navbar Start -->
+  <nav class="navbar navbar-expand-lg" id="navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html" id="logo"><span>T</span>ravel<span>b</span>liss</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+        <span><i class="fa-solid fa-bars"></i></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mynavbar">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'home_view' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'mybooking_view' %}">My Bookings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'package_view' %}">Packages</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#services">Services</a>
+          </li>
+          <!-- <li class="nav-item">
+                <a class="nav-link" href="#gallary">Gallary</a>
+              </li> -->
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'log_view' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout_view' %}">Logout</a>
+          </li>
+        </ul>
+
+        <!-- <form class="d-flex">  -->
+        <!-- <input class="form-control me-2" type="text" placeholder="Search"> -->
+        <!-- <button class="btn btn-primary" type="button">Search</button> -->
+        <!-- <button class="btn btn-primary bg-dark " type="button">Cart</button> -->
+        <!-- </form> -->
+
+        <form class="d-flex">
+          <a class="btn btn-outline-dark" type="submit" href="{% url 'cart_list_view' %}">
+            <i class="bi-cart-fill me-1"></i>
+            Cart
+            <span class="badge bg-dark text-white ms-1 rounded-pill">
+              <i class="fa fa-shopping-cart" style="font-size:15px"></i>
+              {{count}}
+            </span>
+          </a>
+        </form>
+        
+      </div>
+    </div>
+  </nav>
+  <!-- Navbar End -->
+  {% block content %}
+
+  {% if messages %}
+  {% for messages in messages %}
+  {% if messages.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>{{messages}}</strong>
+    <button type="buton" class="btn-close" data-bs-dismiss="alert" arial-label="Close"></button>
+  </div>
+  {% endif %}
+  {% if messages.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{messages}}</strong>
+    <button type="buton" class="btn-close" data-bs-dismiss="alert" arial-label="Close"></button>
+  </div>
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+
+
+
+
+
+  <!-- Home Section Start -->
+  <div class="home" style="background-image: url(static/images/wayanad1.jpg);">
+    <div class="content">
+      <h5>Welcome To Kerala Tourism</h5>
+      <h1>Visit <span class="changecontent"></span></h1>
+      <p>Kerala is one of the most popular and picturesque destinations when planning a trip to the
+        south of India. Known as “God’s own country” with good reason, given that the palace is nestled
+        in the arms of Mother Nature, encircled by gorgeous sandy beaches, towering hills, and forests.
+        With our packages, you’ll go on an exhilarating journey through the state’s
+        plains and untamed areas. We guarantee that your trip to the southern coast of the Indian peninsula
+        will be among your best.</p>
+      <a href="{% url 'home_view' %}">Travelbliss</a>
+    </div>
+  </div>
+  <!-- Home Section End -->
+
+
+  <!-- Section Packages Start -->
+  <section class="packages" id="packages">
+    <div class="container">
+
+      <div class="main-txt">
+        <h1><span>M</span>ost <span>F</span>amous <span>P</span>ackages</h1>
+      </div>
+
+
+      <div class="row" style="margin-top: 30px;">
+        {% for package in packages %}
+        <div class="col-md-4 py-3 py-md-0">
+
+          <div class="card mb-4 ">
+
+            <!-- Add a class to the image container for styling -->
+            <div class="image-container">
+              <img src="{{package.image.url}}" alt="">
+            </div>
+
+            <div class="card-body">
+              <h3>{{package.package_name}}</h3>
+              <p>{{package.description}} </p>
+              <div class="star">
+                <i class="fa-solid fa-star checked"></i>
+                <i class="fa-solid fa-star checked"></i>
+                <i class="fa-solid fa-star checked"></i>
+                <i class="fa-solid fa-star "></i>
+                <i class="fa-solid fa-star "></i>
+              </div>
+              <h6>{{package.duration}}</h6>
+              <h6>Price: <strong>{{package.price}}</strong></h6>
+              <a href="{% url 'detail_view' package.id %}">View Package Details</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <!-- Add CSS to style the images -->
+      <style>
+        .image-container img {
+          width: 100%;
+          /* Ensures the image takes up full width of its container */
+          height: 250px;
+          /* Set the height as per your requirement */
+          object-fit: cover;
+          /* Ensures the aspect ratio is maintained and image covers the container */
+        }
+      </style>
+  </section>
+
+  <!-- Section Packages End -->
+
+
+
+
+
+
+
+  <!-- Section Services Start -->
+  <section class="services" id="services">
+    <div class="container">
+
+      <div class="main-txt">
+        <h1><span>S</span>ervices</h1>
+      </div>
+
+      <div class="row" style="margin-top: 30px;">
+
+        <div class="col-md-6 py-3 py-md-0">
+
+          <div class="card h-100">
+            <i class="fas fa-hotel"></i>
+            <div class="card-body">
+              <h3>Authentic Accommodations</h3>
+              <p>Immerse yourself in Kerala's rich cultural heritage by staying in handpicked accommodations that
+                reflect the region's unique charm and hospitality. From heritage homestays and boutique resorts to
+                eco-friendly lodges and luxury houseboats, we'll help you find the perfect place to unwind and
+                rejuvenate amidst Kerala's natural beauty.</p>
+            </div>
+          </div>
+
+        </div>
+        <!-- <div class="col-md-6 py-3 py-md-0"> -->
+
+        <!-- <div class="card h-100">
+            <i class="fas fa-utensils"></i>
+            <div class="card-body">
+              <h3>Food & Drinks</h3>
+              <p>Create culinary tours that allow travelers to savor Kerala's diverse cuisine, including authentic Kerala meals, seafood delicacies, street food tours, and spice plantation visits.</p>
+            </div>
+          </div> -->
+
+        <!-- </div> -->
+
+        <div class="col-md-6 py-3 py-md-0">
+
+          <div class="card h-100">
+            <i class="fas fa-bullhorn"></i>
+            <div class="card-body">
+              <h3>Local Guide</h3>
+              <p>Embark on guided tours led by knowledgeable local guides who are passionate about sharing their
+                insights and stories about Kerala's history, culture, and traditions. Whether you're exploring ancient
+                temples, bustling markets, or scenic trails, our experienced guides will enhance your travel experience
+                with their expertise and enthusiasm.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="row" style="margin-top: 30px;">
+
+        <div class="col-md-6 py-3 py-md-0">
+
+          <div class="card h-100">
+            <i class="fas fa-globe-asia"></i>
+            <div class="card-body">
+              <h3>24/7 Customer Support</h3>
+              <p>Provide round-the-clock customer support to assist travelers with booking inquiries, itinerary
+                modifications, emergency assistance, and any other travel-related queries.</p>
+            </div>
+          </div>
+
+        </div>
+        <!-- <div class="col-md-6 py-3 py-md-0">
+  
+          <div class="card h-100">
+            <i class="fas fa-plane"></i>
+            <div class="card-body">
+              <h3>Event Planning</h3>
+              <p>Assist travelers in planning special events such as weddings, honeymoons, corporate retreats, and family gatherings in picturesque locations across Kerala.</p>
+            </div>
+          </div>
+  
+        </div> -->
+        <div class="col-md-6 py-3 py-md-0">
+
+          <div class="card h-100">
+            <i class="fas fa-hiking"></i>
+            <div class="card-body">
+              <h3>Adventure Activities</h3>
+              <p>Organize adventure activities such as trekking, wildlife safaris, bamboo rafting, zip-lining, and
+                parasailing to cater to adventurous travelers seeking adrenaline-pumping experiences in Kerala's natural
+                landscapes.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+  <!-- Section Services End -->
+
+
+
+
+  <!-- Section Gallary Start -->
+  <!-- <section class="gallary" id="gallary">
+      <div class="container"> 
+ 
+        <div class="main-txt">
+          <h1><span>G</span>allary</h1>
+        </div>
+
+        <div class="row" style="margin-top: 30px;">
+          <div class="col-md-4 py-3 py-md-0">
+            <div class="card">
+              <img src="./images/g1.png" alt="" height="230px">
+            </div>
+          </div>
+          <div class="col-md-4 py-3 py-md-0">
+            <div class="card">
+              <img src="./images/g2.png" alt="" height="230px">
+            </div>
+          </div>
+          <div class="col-md-4 py-3 py-md-0">
+            <div class="card">
+              <img src="./images/g3.png" alt="" height="230px"> 
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row" style="margin-top: 30px;">
+          <div class="col-md-4 py-3 py-md-0">
+            <div class="card">
+              <img src="./images/g4.png" alt="" height="230px">
+            </div>
+          </div>
+          <div class="col-md-4 py-3 py-md-0">
+            <div class="card">
+              <img src="./images/g5.png" alt="" height="230px">
+            </div>
+          </div>
+          <div class="col-md-4 py-3 py-md-0">
+            <div class="card">
+              <img src="./images/g6.png" alt="" height="230px">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section> -->
+  <!-- Section Gallary End -->
+
+
+
+
+
+
+  <!-- About Start -->
+  <section class="about" id="about">
+    <div class="container">
+
+      <div class="main-txt">
+        <h1>About <span>Us</span></h1>
+      </div>
+
+      <div class="row" style="margin-top: 50px;">
+
+        <div class="col-md-6 py-3 py-md-0">
+          <div class="card">
+            <img src="/static/./images/kadhakali.jpg" alt="">
+          </div>
+        </div>
+
+        <div class="col-md-6 py-3 py-md-0">
+          <h2>How Travel Agency Work</h2>
+          <p>Welcome to Travelbliss, your gateway to the enchanting beauty and rich cultural heritage of "God's Own
+            Country." Nestled in the lush landscapes of South India, Kerala is renowned for its pristine backwaters,
+            serene beaches, verdant hill stations, and vibrant festivals.
+            <br>At Travelbliss, we are passionate about showcasing the unique charm and diversity of Kerala to
+            travelers from around the world. Our mission is to provide you with authentic and immersive experiences that
+            allow you to
+            discover the hidden gems and timeless treasures of this captivating destination.
+          </p>
+          <!-- <button id="about-btn">Read More...</button> -->
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+  <!-- About End -->
+
+
+
+  {% endblock %}
+
+
+  <!-- Footer Start -->
+  <footer id="footer">
+    <h1><span>T</span>ravel</h1>
+    <!-- <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus fugiat, ipsa quos nulla qui alias.</p> -->
+    <div class="social-links">
+      <i class="fa-brands fa-twitter"></i>
+      <i class="fa-brands fa-facebook"></i>
+      <i class="fa-brands fa-instagram"></i>
+      <i class="fa-brands fa-youtube"></i>
+      <i class="fa-brands fa-pinterest-p"></i>
+    </div>
+    <div class="credit">
+      <p>Designed By <a href="#">SA Coding</a></p>
+    </div>
+    <div class="copyright">
+      <p>&copy;Copyright SA Coding. All Rights Reserved</p>
+    </div>
+  </footer>
+  <!-- Footer End -->
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

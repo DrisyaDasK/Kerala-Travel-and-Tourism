@@ -1,0 +1,126 @@
+{% extends 'index.html' %}
+{% block content %}
+<section class="packages" id="packages">
+  <div class="container">
+
+    <div class="main-txt">
+      <h1>{{package.package_name}}</h1>
+    </div>
+
+
+    <div class="row" style="margin-top: 30px;">
+      {% for detail in details %}
+      <div class="col-md-4 py-3 py-md-3">
+
+        <div class="card mb-2" style="height: 100%;"> <!-- Set a fixed height for the card -->
+
+          <!-- Add a class to the image container for styling -->
+          <div class="image-container">
+            <img src="{{detail.image.url}}" alt="">
+          </div>
+
+          <div class="card-body" style="height: 100%;"> <!-- Set a fixed height for the card body -->
+            <h3>{{detail.place_name}}</h3>
+            <p>{{detail.place_description}} </p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      <br>
+      <br>
+      <br>
+      <div>
+        <center><a href="#more" class="read-more-link">View your Hotels</a></center>
+
+        <div id="more" class="read-more-content">
+          <section class="packages" id="packages">
+            <div class="container">
+
+              <div class="main-txt">
+                <hr>
+                <!-- <h1><span>Y</span>our <span>S</span>tay</h1> -->
+                <h1><span>H</span>otel's & <span>S</span>tay <span>D</span>etails</h1>
+              </div>
+
+
+              <div class="row" style="margin-top: 30px;">
+                {% for detail in cart %}
+                <div class="col-md-4 py-3 py-md-3">
+
+                  <div class="card mb-2" style="height: 100%;"> <!-- Set a fixed height for the card -->
+
+                    <!-- Add a class to the image container for styling -->
+                    <div class="image-container">
+                      <img src="{{detail.image.url}}" alt="">
+                    </div>
+
+                    <div class="card-body" style="height: 100%;"> <!-- Set a fixed height for the card body -->
+                      <h3>{{detail.hotel_name}}</h3>
+                      <p>{{detail.hotel_description}} </p>
+
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+
+              </div>
+          </section>
+
+        </div>
+      </div>
+
+      <!-- Add CSS to style the images -->
+      <style>
+        .image-container img {
+          width: 100%;
+          /* Ensures the image takes up full width of its container */
+          height: 250px;
+          /* Set the height as per your requirement */
+          object-fit: cover;
+          /* Ensures the aspect ratio is maintained and image covers the container */
+        }
+      </style>
+
+      <div>
+      <center><a href="{% url 'cart_list_view' %}" class="btn btn-success">Back</a>
+     </center>
+      </div>
+
+    </div>
+</section>
+
+<!-- Add CSS to style the images -->
+<style>
+  .image-container img {
+    width: 100%;
+    /* Ensures the image takes up full width of its container */
+    height: 250px;
+    /* Set the height as per your requirement */
+    object-fit: cover;
+    /* Ensures the aspect ratio is maintained and image covers the container */
+  }
+</style>
+
+
+
+<!-- for hotel view  -->
+
+<style>
+  /* Styling for the read more content */
+  .read-more-content {
+    display: none;
+    /* Hide the content by default */
+  }
+
+  .read-more-content:target {
+    display: block;
+    /* Show content when targeted */
+  }
+
+  .read-more-link {
+    display: block;
+  }
+</style>
+
+
+{% endblock %}
